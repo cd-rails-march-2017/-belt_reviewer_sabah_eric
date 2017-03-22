@@ -1,0 +1,35 @@
+<br>
+
+<h3>Edit your profile</h3>
+
+
+<form action="/users/<%=@user.id%>/update" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  First Name:
+  <br>
+  <input type="text" name="fname" value="<%=@user.fname%>">
+  <br><br>
+  Last Name:
+  <br>
+  <input type="text" name="lname" value="<%=@user.lname%>">
+  <br><br>
+  Email:
+  <br>
+  <input type="text" name="email" value="<%=@user.email%>">
+  <br><br>
+  City:
+  <br>
+  <input type="text" name="city" value="<%=@user.city%>">
+  <br><br>
+  State:
+  <br>
+  <input type="text" name="state" value="<%=@user.state%>">
+  <br><br>
+  <input type="submit" value="edit">
+</form>
+
+<% if flash[:message] %>
+  <% flash[:message].each do |msg| %>
+    <p><h3><i><%=msg%></h3></i></p>
+  <%end%>
+<%end%>

@@ -1,0 +1,19 @@
+<center>
+
+
+  <h1>Update your event</h1>
+  <form action="/events/<%=@event.id%>/update" method="post">
+    <input type = "hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <table>
+    <tr>
+      <td>Event Name: </td><td><input type="text" name="name" value="<%=@event.name%>"></td>
+      <td>Event Date: </td><td><input type="date" name="date" value="<%=@event.date%>"></td>
+      <td>Event City: </td><td><input type="text" name="city" value="<%=@event.city%>"></td>
+      <td>Event State: </td><td><input type="text" name="state" value="<%=@event.state%>"></td>
+      <td><input type="submit" value="update event"></td>
+    </tr>
+  </table>
+  </form>
+
+</center>
+<br><br><br><br>

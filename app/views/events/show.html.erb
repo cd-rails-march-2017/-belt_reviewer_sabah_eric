@@ -1,0 +1,43 @@
+<h1>Events show</h1>
+
+
+<h3>Event: <%=@event.name%></h3>
+
+<p>Host: <%=@event.host.fname%> <%=@event.host.lname%> </p>
+<p>Date: <%=@event.date%></p>
+<p>Location: <%=@event.city%>, <%=@event.state%></p>
+<p>Number of people going to the Event: <%=@count%></p>
+
+<br>
+
+<h4>Confirmed attendees</h4>
+
+<%@attendees.each do |attendant|%>
+
+  <p><%=attendant.name%></p>
+
+<%end%>
+
+<br>
+
+<h4>Discussion about this Event: </h4>
+
+
+<% @comments.each do |comment| %>
+
+<p><i><%=comment.user.fname%> wrote:</i> <%= comment.content %></p>
+
+<% end %>
+<br>
+
+<% if flash[:error] %>
+  <% flash[:error].each do |msg| %>
+    <h4><i><%=msg%></i></h4>
+  <% end %>
+<% end %>
+<form action="/comments/<%=@event.id%>/create" method='post'>
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <textarea name="content" rows="8" cols="40"></textarea><br>
+  <input type="submit" value="add content">
+</form>
+<a href="/events/index"><button>back</button></a>

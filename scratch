@@ -1,0 +1,9 @@
+test code for events index page
+
+<h3>testing</h3>
+
+<% @rsvps.each do |rsvp| %>
+<p>attendee, event id</p>
+<p><%= rsvp.attendees_id %>, <%=rsvp.event_id%></p>
+
+<% end %>

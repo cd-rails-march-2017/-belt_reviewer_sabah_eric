@@ -1,0 +1,83 @@
+<h2>Welcome <%=session[:name]%></h2>
+<br>
+
+<a href="/users/<%=session[:id]%>/show"><button>Edit my profile</button></a>
+<a href="/users/logout"><button>logout</button></a>
+
+<h3>Here are some of the events in your State!</h3>
+
+
+<table>
+  <tr><th>Name</th><th>Date</th><th>Location</th><th>Host</th><th>Action</th></tr>
+  <% for event in @events do %>
+    <% if event.state == session[:state] %>
+      <tr>
+        <td style="padding: 6px;"><a href="/events/<%= event.id %>/show"><%=event.name%></a></td>
+        <td style="padding: 6px;"><%=event.date%></td>
+        <td style="padding: 6px;"><%=event.city%>, <%=event.state%></td>
+        <td style="padding: 6px;"><%=event.host.fname%></td>
+        <td style="padding: 6px;">
+          <% if @user.attending.include?(event) %>
+            joined
+          <% else %>
+            <a href="/events/<%=event.id%>">Join</a>
+          <% end %>
+          <% if session[:id] == event.host_id %>
+            <a href="/events/<%=event.id%>/delete">Delete</a>
+          <% end %>
+        </td>
+    <% end %>
+  <% end %>
+</table><br><br><br>
+
+<h3>Here are some of the events in other parts of the country:</h3>
+
+<table>
+  <tr><th>Name</th><th>Date</th><th>Location</th><th>Host</th><th>Action</th></tr>
+  <% for event in @events do %>
+    <% if event.state != session[:state] %>
+      <tr>
+        <td style="padding: 6px;"><a href="/events/<%= event.id %>/show"><%=event.name%></a></td>
+        <td style="padding: 6px;"><%=event.date%></td>
+        <td style="padding: 6px;"><%=event.city%>, <%=event.state%></td>
+        <td style="padding: 6px;"><%=event.host.fname%></td>
+        <td style="padding: 6px;">
+          <% if @user.attending.include?(event) %>
+            joined
+          <% else %>
+            <a href="/events/<%=event.id%>">Join</a>
+          <% end %>
+          <% if session[:id] == event.host_id %>
+            <a href="/events/<%=event.id%>/delete">Delete</a>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table><br><br>
+
+<% if flash[:message] %>
+  <% flash[:message].each do |msg| %>
+    <p><h3><i><%=msg%></h3></i></p>
+    <br>
+  <%end%>
+<%end%>
+
+<% if flash[:rsvp_error] %>
+  <% flash[:rsvp_error].each do |rsvp| %>
+    <br><p><h3><i><%=rsvp%></h3></i></p>
+  <%end%>
+<%end%>
+
+
+<h4>Add Event:</h4>
+<form action="/events/create" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+<table>
+  <tr><td>Name:</td><td><input type="text" name="name"></td></tr>
+  <tr><td>Date:</td><td><input type="date" name="date"></td></tr>
+  <tr><td>City:</td><td><input type="text" name="city"></td></tr>
+  <tr><td>State:</td><td><input type="text" name="state"></td></tr>
+  <tr><td><input type="submit" value="Add Event"></td></tr>
+</table>
+</form>
