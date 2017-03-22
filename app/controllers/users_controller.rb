@@ -44,6 +44,7 @@ class UsersController < ApplicationController
     @user.update(fname: params[:fname], lname: params[:lname], email: params[:email], city: params[:city], state: params[:state])
     session[:user_id] = @user.id
     if @user.valid?
+      session[:name] = @user.fname
       @user.save
       redirect_to '/events/index'
     else
